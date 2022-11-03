@@ -1,7 +1,0 @@
- # this function returns the Current year balance amount of each specific code assigned
-    def bal_calulator_current_year(self,code):
-        for rec in self:
-            journal_entries = self.env['account.move'].search([('name','!=',False),('state','=','posted'),('company_id','=',self.env.company.id)])
-    def bal_calulator_net_year(self,code):
-        for rec in self:
-            journal_entries = self.env['account.move'].search([('name','!=',False),('state','=','posted'),('company_id','=',self.env.company.id)])
