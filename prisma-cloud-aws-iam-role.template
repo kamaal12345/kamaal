@@ -19,7 +19,7 @@
       "Default" : "PrismaCloudRole-1001908078574538752"
     }
   },
-  "Resources" : {
+    "Resources" : {
     "PrismaCloudRole" : {
       "Type" : "AWS::IAM::Role",
       "Properties" : {
