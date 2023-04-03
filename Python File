@@ -4,11 +4,11 @@ pipeline {
         stage('Install Python') {
             steps {
                 sh 'curl https://pyenv.run | bash'
-                sh 'echo "export PATH="/root/.pyenv/bin:$PATH"" >> ~/.bashrc'
-                sh 'echo "eval "$(pyenv init -)" >> ~/.bashrc'
-                sh 'echo "eval "$(pyenv virtualenv-init -)" >> ~/.bashrc'
-                sh 'pyenv install 3.8.0'
-                sh 'pyenv global 3.8.0'
+                sh 'echo "export PATH="/root/.py/bin:$PATH"" >> ~/.bashrc'
+                sh 'echo "eval "$(py init -)" >> ~/.bashrc'
+                sh 'echo "eval "$(py virtualenv-init -)" >> ~/.bashrc'
+                sh 'py install 3.8.0'
+                sh 'py global 3.8.0'
             }
         }
     }
