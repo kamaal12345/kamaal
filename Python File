@@ -1,0 +1,15 @@
+pipeline {
+    agent any
+    stages {
+        stage('Install Python') {
+            steps {
+                sh 'curl https://pyenv.run | bash'
+                sh 'echo "export PATH="/root/.pyenv/bin:$PATH"" >> ~/.bashrc'
+                sh 'echo "eval "$(pyenv init -)" >> ~/.bashrc'
+                sh 'echo "eval "$(pyenv virtualenv-init -)" >> ~/.bashrc'
+                sh 'pyenv install 3.8.0'
+                sh 'pyenv global 3.8.0'
+            }
+        }
+    }
+}
