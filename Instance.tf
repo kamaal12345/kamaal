@@ -1,5 +1,5 @@
 # Define the AWS provider
-  provider = "aws" {
+  provider "aws" {
   region = "us-east-1"
   access_key = "AKIAVWY4KPJQKK5YWDXL"
   secret_key = "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"
