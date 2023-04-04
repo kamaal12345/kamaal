@@ -10,7 +10,8 @@
     ami           = "ami-00c39f71452c08778"
     instance_type = "t2.micro"
     key_name      = "my-key-pair"
-    security_groups = ["my-security-group"]
+    vpc_security_group_ids = ["${aws_default_vpc.default.default_security_group_id}"]
+    subnet_id     = "${aws_default_vpc.default.subnet_ids[0]}"
  - tags:  = {
     Name = "example-instance"
   }
