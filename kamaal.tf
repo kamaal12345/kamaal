@@ -13,18 +13,6 @@ resource "aws_instance" "example" {
     Name = "example-instance"
   }
 }
-
-# Store the state file remotely in a GitHub repository
-terraform {
-  backend "s3" {
-    bucket         = "my-terraform-state"
-    key            = "ec2.tfstate"
-    region         = "us-east-1"
-    encrypt        = true
-    dynamodb_table = "terraform-locks"
-  }
-}
-
 # Output the public IP address of the EC2 instance
 output "public_ip" {
   value = aws_instance.example.public_ip
