@@ -1,107 +1,31 @@
-name: "Terraform action"
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-permissions:
-      id-token: write # This is required for aws oidc connection
-      contents: read # This is required for actions/checkout
-      pull-requests: write # This is required for gh bot to comment PR
-env:
-  TF_LOG: INFO
-  AWS_REGION: ${{ secrets.AWS_REGION }}
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-        working-directory: .
-    steps:
-      - name: Git checkout
-        uses: actions/checkout@v3
+# Define the AWS provider
+provider "aws" {
+  region = "us-east-1"
+}
 
-      - name: Configure AWS credentials from AWS account
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          role-to-assume: ${{ secrets.AWS_ROLE }}
-          aws-region: ${{ secrets.AWS_REGION }}
-          role-session-name: GitHub-OIDC-TERRAFORM
+# Create a new EC2 instance
+resource "aws_instance" "example" {
+  ami           = "ami-0c55b159cbfafe1f0"
+  instance_type = "t2.micro"
+  key_name      = "my-key-pair"
+  security_groups = ["my-security-group"]
+  tags = {
+    Name = "example-instance"
+  }
+}
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
-        with:
-          terraform_version: 1.2.5
+# Store the state file remotely in a GitHub repository
+terraform {
+  backend "s3" {
+    bucket         = "my-terraform-state"
+    key            = "ec2.tfstate"
+    region         = "us-east-1"
+    encrypt        = true
+    dynamodb_table = "terraform-locks"
+  }
+}
 
-      - name: Terraform fmt
-        id: fmt
-        run: terraform fmt -check
-        continue-on-error: true
-
-      - name: Terraform Init
-        id: init
-        env:
-          AWS_BUCKET_NAME: ${{ secrets.AWS_BUCKET_NAME }}
-          AWS_BUCKET_KEY_NAME: ${{ secrets.AWS_BUCKET_KEY_NAME }}
-        run: terraform init -backend-config="bucket=${AWS_BUCKET_NAME}" -backend-config="key=${AWS_BUCKET_KEY_NAME}" -backend-config="region=${AWS_REGION}"
-
-      - name: Terraform Validate
-        id: validate
-        run: terraform validate -no-color
-
-      - name: Terraform Plan
-        id: plan
-        run: terraform plan -no-color
-        if: github.event_name == 'pull_request'
-        continue-on-error: true
-
-      - uses: actions/github-script@v6
-        if: github.event_name == 'pull_request'
-        env:
-          PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
-            #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
-            #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
-            <details><summary>Validation Output</summary>
-            \`\`\`\n
-            ${{ steps.validate.outputs.stdout }}
-            \`\`\`
-            </details>
-            #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
-            <details><summary>Show Plan</summary>
-            \`\`\`\n
-            ${process.env.PLAN}
-            \`\`\`
-            </details>
-            *Pushed by: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: output
-            })
-      - name: Terraform Plan Status
-        if: steps.plan.outcome == 'failure'
-        run: exit 1
-
-      - name: Terraform Apply
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: terraform apply -auto-approve -input=false
-Footer
-© 2023 GitHub, Inc.
-Footer navigation
-Terms
-Privacy
-Security
-Status
-Docs
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
+# Output the public IP address of the EC2 instance
+output "public_ip" {
+  value = aws_instance.example.public_ip
+}
