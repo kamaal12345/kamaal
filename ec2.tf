@@ -6,7 +6,7 @@ resource "aws_vpc" "demo" {
 	cidir_block = "172.16.0.0/16"
 
   tags ={
-	Name = "vpc-quickcloudpocs"
+	-Name = "vpc-quickcloudpocs"
   }
 }
 
@@ -17,7 +17,7 @@ resource "aws_subnet" "demo1" {
   cidir_block = "172.16.10.0/24"
 
   tags = {
-   Name = "subnet-quickcloudpocs"
+   - name: "subnet-quickcloudpocs"
  }
 }
 
@@ -27,7 +27,7 @@ resource "aws_subnet" "demo1" {
  private_ips =  ["172.16.1.200"]
 
  tags = {
-  Name = "Kamaal subnet"
+ - name: "Kamaal subnet"
  }
 
 }
