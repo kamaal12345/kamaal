@@ -47,12 +47,12 @@ resource "aws_security_group" "demo1" {
 
 ##AWS EC2
 
- recource "aws_instance" "demo1"{
+ resource "aws_instance" "demo1" {
 
-  ami    =  "ami-00c39f71452c08778" # us-ease-1
-  instance_type = "t2.micro"
+ 	 ami    =  "ami-00c39f71452c08778" # us-ease-1
+	  instance_type = "t2.micro"
 
- network_interface {
+ 	network_interface {
 	network_interface_id = aws_interface.demo1.id
 	 device_index     = 0
   }
