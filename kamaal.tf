@@ -1,31 +1,3 @@
-Skip to content
-Product
-Solutions
-Open Source
-Pricing
-Search
-Sign in
-Sign up
-KasteM34
-/
-github-oidc-terraform
-Public
-Code
-Issues
-Pull requests
-Actions
-Projects
-Security
-Insights
-github-oidc-terraform/github-action.yml
-@KasteM34
-KasteM34 first commit
-Latest commit 2aafcd4 on Jul 31, 2022
- History
- 1 contributor
-102 lines (85 sloc)  3.03 KB
- 
-
 name: "Terraform action"
 on:
   push:
