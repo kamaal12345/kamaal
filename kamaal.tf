@@ -13,7 +13,3 @@ resource "aws_instance" "example" {
     Name = "example-instance"
   }
 }
-# Output the public IP address of the EC2 instance
-output "public_ip" {
-  value = aws_instance.example.public_ip
-}
