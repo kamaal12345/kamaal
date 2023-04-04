@@ -81,6 +81,6 @@ resource "aws_instance" "project-iac" {
 }
 
 
-output "ec2instance" {
-  value = aws_instance.project-iac.public_ip
-}
+# output "ec2instance" {
+  # value = aws_instance.project-iac.public_ip
+# }
