@@ -4,9 +4,9 @@ module "ec2_instance" {
 
   name = "single-instance"
 
-  ami                    = "ami-ebd02392"
+  ami                    = "ami-ami-00c39f71452c08778"
   instance_type          = "t2.micro"
-  key_name               = "user1"
+  key_name               = "kamaal"
   monitoring             = true
   vpc_security_group_ids = ["sg-12345678"]
   subnet_id              = "subnet-eddcdzz4"
