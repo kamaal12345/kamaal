@@ -13,7 +13,10 @@ variable "awsprops" {
 }
 
 provider "aws" {
+  access_key= "AKIAVWY4KPJQKK5YWDXL"
+  secret_key= "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"
   region = lookup(var.awsprops, "region")
+
 }
 
 resource "aws_security_group" "project-iac-sg" {
