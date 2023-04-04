@@ -6,11 +6,11 @@ resource "aws_vpc" "demo" {
 	cidir_block = "172.16.0.0/16"
 
   tags ={
-	-Name = "vpc-quickcloudpocs"
-  }
+	- name: = "vpc-quickcloudpocs"
+   }
 }
 
-##AWS VPC Subnet
+## AWS VPC Subnet
 
 resource "aws_subnet" "demo1" {
   vpc_id  = aws_vpc.demo1.id
