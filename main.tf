@@ -1,12 +1,12 @@
 variable "awsprops" {
-    type = "map"
+  # type = "map"
     default = {
     region = "us-east-1"
     vpc = "vpc-0fd10b3708d9c117e"
     ami = "ami-00c39f71452c08778"
     itype = "t2.micro"
     subnet = "subnet-0d4151918dd867038"
-    publicip = true
+    public_ip = true
     keyname = "kamaal-commankey"
     secgroupname = "IAC-Sec-Group"
   }
