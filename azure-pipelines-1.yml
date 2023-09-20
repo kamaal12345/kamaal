@@ -1,0 +1,23 @@
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout your source code from your version control system (e.g., Git)
+                checkout scm
+            }
+        }
+        stage('Build') {
+            steps {
+                // Build your application (if needed)
+                sh 'npm install' // Example for a Node.js application
+            }
+        }
+        stage('Test') {
+            steps {
+                // Run your tests here
+                sh 'npm test' // Example for running tests with npm
+            }
+        }
+    }
+}
