@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     tools {
-        maven 'Maven3' // Name you configured in Jenkins -> Global Tool Configuration
-        jdk 'JDK11'    // Name you configured in Jenkins -> Global Tool Configuration
+        maven 'Maven3' // Must match name in Jenkins -> Global Tool Configuration
+        jdk 'JDK11'    // Must match name in Jenkins -> Global Tool Configuration
     }
 
     stages {
@@ -21,17 +21,16 @@ pipeline {
 
         stage('SonarQube Analysis') {
             environment {
-                SONARQUBE = credentials('sonar-token') // Jenkins credential ID for SonarQube token
+                SONAR_TOKEN = credentials('sonar-token') // Jenkins Credential ID for SonarQube token
             }
             steps {
-                withSonarQubeEnv('MySonarQube') { // 'MySonarQube' is the name in Jenkins SonarQube server config
+                withSonarQubeEnv('SonarQube') { // Name must exactly match Jenkins SonarQube server config
                     sh '''
                         mvn sonar:sonar \
-                        -Dsonar.projectKey=MyProject \
-                        -Dsonar.host.url=https://sonarqjpb.ddns.net/ \
-                        -Dsonar.login=1f60c96742e9d3800b0019d53161ed
-                        '''
-
+                          -Dsonar.projectKey=MyProject \
+                          -Dsonar.host.url=https://sonarqjpb.ddns.net \
+                          -Dsonar.login=$SONAR_TOKEN
+                    '''
                 }
             }
         }
@@ -45,4 +44,3 @@ pipeline {
         }
     }
 }
-
