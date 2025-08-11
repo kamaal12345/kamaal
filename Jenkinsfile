@@ -25,10 +25,13 @@ pipeline {
             }
             steps {
                 withSonarQubeEnv('MySonarQube') { // 'MySonarQube' is the name in Jenkins SonarQube server config
-                    sh "mvn sonar:sonar \
-                        -Dsonar.projectKey=my-project-key \
-                        -Dsonar.host.url=https://sonarqjpb.ddns.net \
-                        -Dsonar.login=${SONARQUBE}"
+                    sh '''
+                        mvn sonar:sonar \
+                        -Dsonar.projectKey=MyProject \
+                        -Dsonar.host.url=https://sonarqjpb.ddns.net/ \
+                        -Dsonar.login=1f60c96742e9d3800b0019d53161ed
+                        '''
+
                 }
             }
         }
